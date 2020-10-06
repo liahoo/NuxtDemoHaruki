@@ -10,8 +10,10 @@
       <b-button pill class="btn-warning button-rounded" @click="tabIndex = 1">
         人気<br>メニュー
       </b-button>
-      <b-button pill class="btn-warning button-rounded" @click="tabIndex = 2">
-        新作<br>メニュー
+      <b-button pill class="btn-warning button-rounded">
+        <router-link to="/menu" class="link-text">
+          すべての<br>メニュー
+        </router-link>
       </b-button>
     </div>
     <transition name="fade">
@@ -25,11 +27,11 @@
         <MenuList :items="menuRecommended" />
       </div>
     </transition>
-    <Footer />
   </div>
 </template>
 
 <script>
+import menus from '../assets/menus.js'
 export default {
   data () {
     return {
@@ -40,61 +42,9 @@ export default {
     }
   },
   created () {
-    this.menuRecommended = [
-      {
-        id: 1,
-        image: '/img/ramen.jpg',
-        title: 'えび豚骨ラーメン',
-        subTitle: '当店自慢の一品',
-        price: 880
-      },
-      {
-        id: 2,
-        image: '/img/tsukemen.jpg',
-        title: 'つけ麺',
-        subTitle: '満腹は幸せ',
-        price: 880
-      },
-      {
-        id: 3,
-        image: '/img/ramen.jpg',
-        title: '濃厚ラーメン',
-        subTitle: '人気No.1',
-        price: 880
-      },
-      {
-        id: 4,
-        image: '/img/ramen.jpg',
-        title: '激辛つけ麺',
-        subTitle: '本当に辛いよ！',
-        price: 880
-      },
-      {
-        id: 5,
-        image: '/img/ramen.jpg',
-        title: '担々麺',
-        subTitle: '女性人気No.1',
-        price: 880
-      }
-    ]
-    this.menuPopular = [
-      {
-        id: 6,
-        image: '/img/ramen.jpg',
-        title: '激辛つけ麺',
-        subTitle: '本当に辛いよ！',
-        price: 880
-      }
-    ]
-    this.menuNew = [
-      {
-        id: 7,
-        image: '/img/ramen.jpg',
-        title: '担々麺',
-        subTitle: '女性人気No.1',
-        price: 880
-      }
-    ]
+    this.menuRecommended = menus.recommend()
+    this.menuPopular = menus.popular()
+    this.menuNew = menus.new()
   },
   methods: {
     tabChange: (index) => {
@@ -111,15 +61,12 @@ export default {
   max-width: 800px;
   min-height: 100vh;
   justify-content: center;
-  background-color: lightgrey;
 }
 .mid-menu {
   min-height: 100px;
   justify-content: center;
   text-align: center;
   align-items: center;
-  background-color: lightgrey;
-
 }
 .slider {
   margin-left: -15px;
@@ -134,7 +81,9 @@ export default {
   font-weight: bold;
   font-size: small;
 }
-
+.link-text{
+  color: black!important;
+}
 .title {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
